@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const handlebars = require('express-handlebars');
 const app = express();
 const port = 3000;
+app.use(express.static(path.join(__dirname, 'public/css')));
 // HTTP Looger
 app.use(morgan('combined'));
 // HTTP template engine
