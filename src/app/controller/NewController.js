@@ -2,12 +2,12 @@
 class NewController {
 
     // [Get] /news
-    index (req, res){
+    index(req, res) {
         res.render('hello')
     }
 
     // [Get] /news/:slug
-    show (req, res){
+    show(req, res) {
         res.render('NEW DETAILS')
     }
 }

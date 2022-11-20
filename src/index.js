@@ -3,8 +3,12 @@ const express = require('express');
 const morgan = require('morgan');
 const handlebars = require('express-handlebars');
 const route = require('./routes/index.routes');
+const db = require('./config/db/index');
+
 const app = express();
 const port = 3000;
+
+var bodyParser = require('body-parser');
 
 // Static
 app.use(express.static(path.join(__dirname, 'public/css')));
@@ -17,6 +21,12 @@ app.engine('hbs',handlebars.engine({
 );
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname,'resources/views'));
+
+
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+// Connet DB
+db.connect();
 
 // Route
 route(app);
