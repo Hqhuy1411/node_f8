@@ -28,5 +28,20 @@ class CourseController {
         res.redirect('/course');
         
     }
+
+      // [Post] /:slug/edit
+      edit(req,res,next){
+        Course.findOne({slug : req.params.slug})
+        .then(course =>{
+            res.render('cource/edit', { course: MongoosetoObject(course) })
+        })
+        .catch(next)
+    }
+
+    update(req,res,next){
+        Course.updateOne({slug : req.params.slug},req.body)
+            .then(()=> res.redirect('/me/stored/courses'))
+            .catch(next)
+    }
 }
 module.exports = new CourseController;
