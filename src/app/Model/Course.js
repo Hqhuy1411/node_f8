@@ -7,7 +7,11 @@ const Course = new Schema({
   name: String,
   description: String,
   image: String,
-  slug: { type: String, slug: "name", unique: true  }
-});
+  slug: { type: String, slug: "name", unique: true  },
+  },
+  {
+    timestamps :true
+  },
+);
 
 module.exports = mongoose.model('Course', Course);

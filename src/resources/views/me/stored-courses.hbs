@@ -19,7 +19,8 @@
                     <td>{{this.name}}</td>
                     <td>{{this.description}}</td>
                     <td><a href="/course/{{this.slug}}/edit">Sửa</a></td>
-                    <td><a href="/course/{{this.slug}}/delete">Xóa</a></td>
+                    <td><a href="" class="btn btn-primary" data-toggle="modal" data-slug="{{this.slug}}"
+                            data-target="#delete-course">Xóa</a></td>
                 </tr>
                 {{/each}}
             </tbody>
@@ -28,3 +29,46 @@
 
 
 </div>
+{{!-- Form an cho delete --}}
+<form name="form-delete" method="post"> </form>
+
+{{!--Cornfirm Delete --}}
+<div id="delete-course" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Course</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-delete-course" type="button" class="btn btn-danger">Yes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var courseSlug;
+        var deleteForm = document.forms['form-delete']
+        var btnDelte_Yes = document.getElementById("btn-delete-course")
+        $('#delete-course').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            courseSlug = button.data('slug')
+        })
+        btnDelte_Yes.onclick = function(){
+            deleteForm.action = "/course/" +courseSlug + "?_method=DELETE"
+            deleteForm.submit();
+        }
+
+    })
+
+
+</script>

@@ -43,5 +43,13 @@ class CourseController {
             .then(()=> res.redirect('/me/stored/courses'))
             .catch(next)
     }
+
+    
+    destroy(req,res,next){
+        Course.deleteOne({slug : req.params.slug})
+            .then(()=> res.redirect('back'))
+            .catch(next)
+    }
+
 }
 module.exports = new CourseController;
