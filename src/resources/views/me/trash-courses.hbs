@@ -1,6 +1,6 @@
 <div class="mt-4">
-    <h3>Khóa học của tôi</h3>
-    <h2><a href="/me/trash/courses">Thùng khác</a></h2>
+    <h3>Thùng rác </h3>
+    <h2><a href="/me/stored/courses">Trời lại khóa học </a></h2>
 
     <div>
         <table class="table mt-4">
@@ -18,12 +18,12 @@
                     <th scope="row">{{sum @index 1}}</th>
                     <td>{{this.name}}</td>
                     <td>{{this.description}}</td>
-                    <td><a href="/course/{{this.slug}}/edit">Sửa</a></td>
+                    <td><a href="" class="btn btn-primary btn-restore" data-slug="{{this.slug}}">Khôi phục</a></td>
                     <td><a href="" class="btn btn-primary" data-toggle="modal" data-slug="{{this.slug}}"
-                            data-target="#delete-course">Xóa</a></td>
+                            data-target="#delete-course">Xóa vĩnh viễn</a></td>
                 </tr>
                 {{else}}
-                    <td>Không có khóa học nào</td>
+                <td>Thùng rác trống</td>
 
                 {{/each}}
             </tbody>
@@ -34,6 +34,10 @@
 </div>
 {{!-- Form an cho delete --}}
 <form name="form-delete" method="post"> </form>
+
+
+{{!-- Form an cho restore --}}
+<form name="form-restore" method="post"> </form>
 
 {{!--Cornfirm Delete --}}
 <div id="delete-course" class="modal" tabindex="-1" role="dialog">
@@ -61,16 +65,24 @@
     document.addEventListener('DOMContentLoaded', function () {
         var courseSlug;
         var deleteForm = document.forms['form-delete']
+        var restoreForm = document.forms['form-restore']
         var btnDelte_Yes = document.getElementById("btn-delete-course")
+
+        var restoreBtn = $('.btn-restore');
         $('#delete-course').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)
             courseSlug = button.data('slug')
         })
-        btnDelte_Yes.onclick = function(){
-            deleteForm.action = "/course/" +courseSlug + "?_method=DELETE"
+        btnDelte_Yes.onclick = function () {
+            deleteForm.action = "/course/" + courseSlug + "/force?_method=DELETE"
             deleteForm.submit();
         }
-
+        restoreBtn.click(function (e) {
+            e.preventDefault();
+            var restoreSlug = $(this).data('slug');
+            restoreForm.action = "/course/" + restoreSlug + "/restore?_method=PATCH"
+            restoreForm.submit();
+        })
     })
 
 

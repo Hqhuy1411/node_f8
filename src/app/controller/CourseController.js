@@ -46,10 +46,21 @@ class CourseController {
 
     
     destroy(req,res,next){
-        Course.deleteOne({slug : req.params.slug})
+        Course.delete({slug : req.params.slug})
             .then(()=> res.redirect('back'))
             .catch(next)
     }
 
+
+    restore(req,res,next){
+        Course.restore({slug : req.params.slug})
+            .then(()=> res.redirect('back'))
+            .catch(next)
+    }
+    forceDestroy(req,res,next){
+        Course.deleteOne({slug : req.params.slug})
+            .then(()=> res.redirect('back'))
+            .catch(next)
+    }
 }
 module.exports = new CourseController;
